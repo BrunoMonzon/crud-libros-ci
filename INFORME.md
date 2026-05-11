@@ -306,7 +306,7 @@ app.get('/libros/buscar/:titulo', (req, res) => {
 });
 ```
 
-![PR con CI corriendo](./img/pr-ci-corriendo-1.png)
+![PR con CI corriendo](./img/pr-ci-corriendo-2.png)
 
 Los 2 checks pasaron ✅ y el merge fue completado exitosamente.
 
