@@ -1,2 +1,5 @@
-# crud-libros-ci
-Repositorio de la practica de laboratorio de COM610
+## Documentación del Laboratorio
+
+Puedes encontrar el informe completo con capturas de pantalla y evidencias en el siguiente enlace:
+
+- [Ver informe del laboratorio](./INFORME.md)
