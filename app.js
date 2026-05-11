@@ -36,4 +36,11 @@ app.delete('/libros/:id', (req, res) => {
   res.status(200).json({ mensaje: 'Libro eliminado correctamente' });
 });
 
+app.get('/libros/buscar/:titulo', (req, res) => {
+  const resultado = libros.getAll().filter((l) =>
+    l.titulo.toLowerCase().includes(req.params.titulo.toLowerCase())
+  );
+  res.status(200).json(resultado);
+});
+
 module.exports = app;
