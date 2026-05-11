@@ -1,3 +1,4 @@
+const variableNoUsada = 'esto causara fallo en linting';
 const express = require('express');
 const app = express();
 const libros = require('./libros');
