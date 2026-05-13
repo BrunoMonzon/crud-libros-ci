@@ -32,6 +32,16 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/crud-libros:${{ github.sha }}
             ${{ secrets.DOCKER_USERNAME }}/crud-libros:latest
 
+      - name: Escaneo de vulnerabilidades
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ${{ secrets.DOCKER_USERNAME }}/crud-libros:${{ github.sha }}
+          format: 'table'
+          exit-code: '0'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
+
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
@@ -49,8 +59,8 @@ jobs:
             docker pull $IMAGE
             sudo docker rm -f crud-libros-new || true
             docker run -d \
-            --name crud-libros-new \
-            --restart unless-stopped \
+              --name crud-libros-new \
+              --restart unless-stopped \
               -p 8081:3000 \
               $IMAGE
 
