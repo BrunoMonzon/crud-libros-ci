@@ -85,3 +85,24 @@ jobs:
             fi
 
             docker system prune -f
+        deploy-staging:
+          needs: build-and-push
+          runs-on: ubuntu-latest
+          environment: staging
+          steps:
+            - name: Desplegar en staging
+              uses: appleboy/ssh-action@v1.0.0
+              with:
+                host: ${{ secrets.SSH_HOST }}
+                username: ${{ secrets.SSH_USER }}
+                key: ${{ secrets.SSH_PRIVATE_KEY }}
+                script: |
+                  docker pull ${{ secrets.DOCKER_USERNAME }}/crud-libros:latest
+                  docker stop crud-libros-staging || true
+                  docker rm crud-libros-staging || true
+                  docker run -d \
+                    --name crud-libros-staging \
+                    --restart unless-stopped \
+                    -p 8082:3000 \
+                    ${{ secrets.DOCKER_USERNAME }}/crud-libros:latest
+                  echo "Staging desplegado en puerto 8082"
