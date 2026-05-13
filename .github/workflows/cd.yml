@@ -47,24 +47,24 @@ jobs:
             IMAGE="${{ secrets.DOCKER_USERNAME }}/crud-libros:latest"
 
             docker pull $IMAGE
+            sudo docker rm -f crud-libros-new || true
             docker run -d \
-              --name crud-libros-new \
-              --restart unless-stopped \
-              -p 3001:3000 \
+            --name crud-libros-new \
+            --restart unless-stopped \
+              -p 8081:3000 \
               $IMAGE
 
             sleep 5
 
-            if curl -sf http://localhost:3001/health; then
+            if curl -sf http://localhost:8081/health; then
               echo "Health check exitoso. Activando nuevo contenedor..."
 
-              docker stop crud-libros || true
-              docker rm crud-libros || true
+              sudo docker rm -f crud-libros || true
 
               docker run -d \
                 --name crud-libros \
                 --restart unless-stopped \
-                -p 80:3000 \
+                -p 8080:3000 \
                 $IMAGE
 
               docker rm -f crud-libros-new || true
