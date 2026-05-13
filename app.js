@@ -5,7 +5,7 @@ const libros = require('./libros');
 app.use(express.json());
 
 app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'ok', service: 'crud-libros' });
+  res.status(200).json({ status: 'ok', service: 'crud-libros', version: '2.0.0' });
 });
 
 app.get('/libros', (req, res) => {
